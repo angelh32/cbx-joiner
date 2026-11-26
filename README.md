@@ -53,16 +53,16 @@ With the venv activated, use `cbz-wrap` from any directory. Without activating, 
 List the files in one archive as a tree with `-r` (this ignores `-o`, `-f` and `-s`):
 
 ```sh
-cbz-wrap -r "test-data/Kiss x Death/Kiss x Death Ch.01.0.cbz"
+cbz-wrap -r "test-data/Sample Series/Series Ch.01.0.cbz"
 ```
 
 Example tree output:
 
 ```text
-Kiss x Death Ch.25.0.cbz
-└── Kiss x Death 25
-    ├── Kiss-x-Death-25-Pg1.jpg
-    ├── Kiss-x-Death-25-Pg2.jpg
+Series Ch.25.0.cbz
+└── Series 25
+    ├── Series-25-Pg1.jpg
+    ├── Series-25-Pg2.jpg
     └── ...
 ```
 
@@ -70,19 +70,23 @@ Compile several chapters into one archive with `-o` and `-f`:
 
 ```sh
 cbz-wrap -o compiled.cbz \
-  -f "test-data/Kiss x Death/Kiss x Death Ch.25.0.cbz" \
-     "test-data/Kiss x Death/Kiss x Death Ch.25.1.cbz"
+  -f "test-data/Sample Series/Series Ch.25.0.cbz" \
+     "test-data/Sample Series/Series Ch.25.1.cbz"
 ```
 
 `-f` takes space-separated file paths. `.cba`, `.cbz`, and `.zip` are all ZIP containers and work the same way.
 
-Add `-s`/`--simplify` to rename chapters and pages while compiling. For example, `Series Ch.01/Series Ch.01-Pg18.jpg` becomes `Chapter 01/018.jpg`:
+Add `-s`/`--simplify` to rename chapters and pages while compiling. For example, `Series Ch.01/Series Ch.01-Pg18.jpg` becomes `01-chapter/018.jpg`:
 
 ```sh
 cbz-wrap -s -o compiled.cbz \
-  -f "test-data/Kiss x Death/Kiss x Death Ch.25.0.cbz" \
-     "test-data/Kiss x Death/Kiss x Death Ch.25.1.cbz"
+  -f "test-data/Sample Series/Series Ch.25.0.cbz" \
+     "test-data/Sample Series/Series Ch.25.1.cbz"
 ```
+
+Simplified chapter folders use the chapter number with a `-chapter` suffix, and
+decimals are preserved — for example, `Series Ch.25.0` becomes
+`25.0-chapter`.
 
 During compilation only image files are copied (jpg/jpeg, png, webp, gif, bmp,
 tif/tiff, avif). Nested folders from each chapter are flattened into one folder

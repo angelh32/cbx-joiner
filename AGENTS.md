@@ -28,7 +28,7 @@ layout, `argparse` for the CLI, and `pytest` for tests.
 │   ├── test_path_tools.py
 │   └── test_read_zip.py
 ├── test-data/                # Sample CBZ fixtures; treat as read-only
-│   └── Kiss x Death/
+│   └── Sample Series/
 └── venv/                     # Local virtual environment (not committed)
 ```
 
@@ -53,8 +53,9 @@ Generated and ignored: `src/cbz_wrap.egg-info/`, `__pycache__/`, `.pytest_cache/
     `create_zip`, keeps only files with extensions in `IMAGE_EXTENSIONS`, and
     stores each image as `<chapter zip stem>/<image basename>`, flattening
     original nested folders. With `simplify=True`, `Series Ch.01-Pg18.jpg`
-    becomes `018.jpg` in a `Chapter 01` folder; unmatched names are left alone.
-    Duplicate image basenames within a chapter get `_2`, `_3`, etc.
+    becomes `018.jpg` in a `01-chapter` folder; decimals are preserved, so
+    `Series Ch.25.0` uses a `25.0-chapter` folder. Unmatched names are left
+    alone. Duplicate image basenames within a chapter get `_2`, `_3`, etc.
 - Tests import from `cbz_wrap` (for example `from cbz_wrap.read_zip import
   read_zip`), not from `src.cbz_wrap`.
 
@@ -70,13 +71,13 @@ pip install -e ".[dev]"
 python -m pytest
 
 # CLI
-cbz-wrap -r "test-data/Kiss x Death/Kiss x Death Ch.01.0.cbz"
+cbz-wrap -r "test-data/Sample Series/Series Ch.01.0.cbz"
 cbz-wrap -o compiled.cbz \
-  -f "test-data/Kiss x Death/Kiss x Death Ch.25.0.cbz" \
-     "test-data/Kiss x Death/Kiss x Death Ch.25.1.cbz"
+  -f "test-data/Sample Series/Series Ch.25.0.cbz" \
+     "test-data/Sample Series/Series Ch.25.1.cbz"
 cbz-wrap -s -o compiled.cbz \
-  -f "test-data/Kiss x Death/Kiss x Death Ch.25.0.cbz" \
-     "test-data/Kiss x Death/Kiss x Death Ch.25.1.cbz"
+  -f "test-data/Sample Series/Series Ch.25.0.cbz" \
+     "test-data/Sample Series/Series Ch.25.1.cbz"
 ```
 
 Without activating the venv, use `venv/bin/python -m pytest`,
