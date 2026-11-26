@@ -166,19 +166,19 @@ def test_simplify_renames_folder_and_pages(tmp_path):
 
     with zipfile.ZipFile(compiled) as archive:
         assert archive.namelist() == [
-            "Chapter 01/018.jpg",
-            "Chapter 01/007.png",
+            "01-chapter/018.jpg",
+            "01-chapter/007.png",
         ]
-        assert archive.read("Chapter 01/018.jpg") == b"eighteen"
-        assert archive.read("Chapter 01/007.png") == b"seven"
+        assert archive.read("01-chapter/018.jpg") == b"eighteen"
+        assert archive.read("01-chapter/007.png") == b"seven"
 
 
 def test_simplify_handles_decimals_and_keeps_unmatched_names(tmp_path):
-    chapter = tmp_path / "Kiss x Death Ch.25.0.cbz"
+    chapter = tmp_path / "Series Ch.25.0.cbz"
     make_zip(
         chapter,
         [
-            ("Kiss x Death 25/Kiss-x-Death-25-Pg1.jpg", b"one"),
+            ("Series 25/Series-25-Pg1.jpg", b"one"),
             ("cover.jpg", b"cover"),
         ],
     )
@@ -190,9 +190,9 @@ def test_simplify_handles_decimals_and_keeps_unmatched_names(tmp_path):
 
     with zipfile.ZipFile(compiled) as archive:
         assert archive.namelist() == [
-            "Chapter 25/001.jpg",
-            "Chapter 25/cover.jpg",
+            "25.0-chapter/001.jpg",
+            "25.0-chapter/cover.jpg",
             "Misc/001.jpg",
         ]
-        assert archive.read("Chapter 25/001.jpg") == b"one"
+        assert archive.read("25.0-chapter/001.jpg") == b"one"
         assert archive.read("Misc/001.jpg") == b"misc"

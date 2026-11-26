@@ -129,8 +129,8 @@ def test_simplify_flag_renames_chapters_and_pages(tmp_path):
     )
 
     with zipfile.ZipFile(compiled) as archive:
-        assert archive.namelist() == ["Chapter 01/018.jpg"]
-        assert archive.read("Chapter 01/018.jpg") == b"eighteen"
+        assert archive.namelist() == ["01-chapter/018.jpg"]
+        assert archive.read("01-chapter/018.jpg") == b"eighteen"
 
 
 def test_no_arguments_prints_help():

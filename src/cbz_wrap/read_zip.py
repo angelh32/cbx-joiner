@@ -20,15 +20,15 @@ PAGE_PATTERN = re.compile(r"Pg\.?\s*(\d+)", re.IGNORECASE)
 
 
 def _simplify_chapter_folder(stem):
-    """Return ``Chapter NN`` for a chapter-like stem, otherwise the stem."""
+    """Return ``NN-chapter`` for a chapter-like stem, otherwise the stem."""
     match = CHAPTER_PATTERN.search(stem)
     if not match:
         return stem
     major, _, minor = match.group(1).partition(".")
     number = f"{int(major):02d}"
-    if minor and int(minor) != 0:
+    if minor:
         number += f".{int(minor)}"
-    return f"Chapter {number}"
+    return f"{number}-chapter"
 
 
 def _simplify_image_name(name):
@@ -103,8 +103,9 @@ def add_files_from_chapters(compiled_zip, chapters, simplify=False):
     By default every chapter's images are placed in a folder named after that
     chapter's zip file (its stem, without the ``.zip``/``.cbz`` extension).
     When ``simplify`` is true, ``Series Ch.01/Series Ch.01-Pg18.jpg`` becomes
-    ``Chapter 01/018.jpg``. Names without a recognizable ``Ch.`` or ``Pg.``
-    number are left as-is.
+    ``01-chapter/018.jpg``; decimals are preserved, so ``Series Ch.25.0`` uses
+    ``25.0-chapter``. Names without a recognizable ``Ch.`` or ``Pg.`` number
+    are left as-is.
 
     Original nested folders are discarded: images are stored directly in the
     chapter folder. Non-image files and directory entries are ignored. If two

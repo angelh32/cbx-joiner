@@ -33,7 +33,7 @@ def main():
         "-s",
         "--simplify",
         action="store_true",
-        help="rename chapters/pages to 'Chapter NN/NNN.ext'",
+        help="rename chapters/pages to 'NN-chapter/NNN.ext'",
     )
     args = parser.parse_args()
 
